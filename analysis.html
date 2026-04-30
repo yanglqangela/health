@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>营养分析 | 饮食健康管理系统</title>
+  <link rel="stylesheet" href="bootstrap-5.3.6-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .analysis-banner {
+      width: 100%;
+      padding: 15px 0;
+      background: linear-gradient(to bottom, #c8e6c9 0%, #f0f8f0 100%);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .analysis-title {
+      display: inline-block;
+      padding: 10px 30px;
+      border-bottom: 4px solid darkseagreen;
+      background: #fbfada;
+      border-radius: 5px;
+    }
+    .score-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      font-weight: bold;
+      color: white;
+      margin: 0 auto;
+    }
+    .nutrient-bar {
+      height: 30px;
+      border-radius: 15px;
+      background: #e0e0e0;
+      position: relative;
+      overflow: hidden;
+    }
+    .nutrient-fill {
+      height: 100%;
+      border-radius: 15px;
+      transition: width 0.5s;
+    }
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-md fixed-top navbar-dark" style="background-color: #e0ecde;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html" style="color: forestgreen;">饮食健康管理系统</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item"><a class="nav-link" href="index.html" style="color: darkseagreen;">首页</a></li>
+          <li class="nav-item"><a class="nav-link" href="diet.html" style="color: darkseagreen;">饮食日记</a></li>
+          <li class="nav-item"><a class="nav-link" href="goal.html" style="color: darkseagreen;">健康目标</a></li>
+          <li class="nav-item"><a class="nav-link active" href="analysis.html" style="color: darkseagreen;">数据分析</a></li>
+          <li class="nav-item"><a class="nav-link" href="health.html" style="color: darkseagreen;">健康指标</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin.html" style="color: darkseagreen;">后台管理</a></li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="profile.html" style="color: darkseagreen;">个人中心</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="margin-top: 100px;">
+    <div class="analysis-banner">
+      <h1 class="analysis-title">营养分析</h1>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <label class="form-label">选择日期：</label>
+        <input type="date" id="analysisDate" class="form-control" style="max-width: 200px;">
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-4 text-center">
+        <h5>营养评分</h5>
+        <div class="score-circle" id="scoreCircle">--</div>
+        <p class="mt-2" id="scoreLevel">--</p>
+      </div>
+      <div class="col-md-8">
+        <h5>营养摄入对比</h5>
+        <div id="nutrientComparison"></div>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">改善建议</h5>
+          </div>
+          <div class="card-body">
+            <ul id="suggestionsList"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">营养素占比</div>
+          <div class="card-body">
+            <canvas id="macroChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">每周热量趋势</div>
+          <div class="card-body">
+            <canvas id="weeklyChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/DataStorage.js"></script>
+  <script src="js/NutritionCalculator.js"></script>
+  <script src="js/ChartManager.js"></script>
+  <script src="js/analysis.js"></script>
+</body>
+</html>

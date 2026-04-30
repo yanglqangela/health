@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<title>食物详情</title>
+		<link rel="stylesheet" href="bootstrap-5.3.6-dist/css/bootstrap.min.css" />
+		<style>
+			.detail-container {
+				max-width: 800px;
+				margin: 80px auto;
+				padding: 20px;
+				background: #ffffff;
+			}
+
+			.detail-image {
+				max-width: 300px;
+				border-radius: 10px;
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+				margin-bottom: 20px;
+			}
+
+			.detail-text {
+				margin-top: 20px;
+			}
+
+			.diet-tips {
+				margin-top: 40px;
+				padding: 20px;
+				background: #f0f8f0;
+				border-left: 5px solid forestgreen;
+				border-radius: 5px;
+			}
+			
+			/* 标题美化 */
+			.meal-title {
+			  display: inline-block;
+			  padding: 8px 20px;
+			  background: #f0f8f0;
+			  border-left: 5px solid forestgreen;
+			  border-radius: 4px;
+			  margin-bottom: 15px;
+			  font-weight: bold;
+			}
+			
+			/* 容器: 标题和轮播图整体左对齐，但整体居中 */
+			.meal-box {
+			  text-align: left;
+			}
+			
+			/* 图片样式 */
+			.meal-image {
+			  max-height: 300px;
+			  border-radius: 10px;
+			  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+			  display: block;
+			  margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div class="container detail-container">
+			<h2 class="text-center mb-4">食物详情</h2>
+			<h3 id="food-title"></h3>
+			<div class="text-center">
+				<img id="food-image" src="" alt="食物图片" class="detail-image">
+			</div>
+			<div class="detail-text">
+				<p id="food-description"></p>
+			</div>
+
+			<div id="diet-tips" class="diet-tips"></div>
+			<!-- 推荐一周每日餐食（标题在轮播图左上方） -->
+			<div id="daily-meal" class="daily-meal mt-5 text-center">
+			  <div class="meal-box d-inline-block text-start">
+			    <h4 class="meal-title">推荐一周每日餐食示例</h4>
+			    <div id="mealCarousel" class="carousel slide" data-bs-ride="carousel">
+			      <div class="carousel-inner" id="meal-carousel-inner"></div>
+			      <button class="carousel-control-prev" type="button" data-bs-target="#mealCarousel" data-bs-slide="prev">
+			        <span class="carousel-control-prev-icon"></span>
+			      </button>
+			      <button class="carousel-control-next" type="button" data-bs-target="#mealCarousel" data-bs-slide="next">
+			        <span class="carousel-control-next-icon"></span>
+			      </button>
+			    </div>
+			  </div>
+			</div>
+
+
+
+
+			<a id="back-link" href="index.html" class="btn btn-success mt-4">返回推荐列表</a>
+		</div>
+
+		<script>
+			// 数据示例
+			const foodData = {
+				1: {
+					title: '白芍秋葵',
+					image: 'img/foot2.jpg',
+					description: '秋葵又名黄秋葵、黄蜀葵、羊角豆，为锦葵科一年生草本植物，性喜温暖，素有蔬菜王之称，有极高的经济用途和食用等价值。秋葵具有补肾填精、保护肠胃、改善贫血、补钙、美容养颜的功效，适合高血压患者食用。',
+					category: 'hypertension'
+				},
+				2: {
+					title: '黄瓜炒虾仁',
+					image: 'img/foot3.jpg',
+					description: '食物也是一味“药”—— 黄瓜，别名： 胡瓜、玉瓜、刺瓜，性味： 味甘，性凉；肺、脾、胃经，功效： 清热，利水，解毒，《日用本草》：“除胸中热，解烦渴，利水道。”【如何挑选】一、看颜色： 鲜绿是关键，表面光滑且有二、摸表面：刺多且硬的黄瓜更脆嫩三、看形状：匀称直挺的黄瓜更优质四、闻气味：清新自然的黄瓜更健康五、掂重量：手感沉实的黄瓜水分足【神仙搭配】黄瓜+木耳：利湿、解毒、养颜、黄瓜+豆腐：解毒消炎、润燥平胃、黄瓜+苹果：润肠、养颜、黄瓜+猪肉：清热解毒、滋阴润燥、黄瓜+鸡蛋：养颜、促消化、健脑、黄瓜+酸奶：促消化、润肠、美颜、黄瓜+虾仁：清热解暑、益气健脾	【养生吃法】黄瓜火腿炒鸡蛋：养颜、促消化、提升免疫.黄瓜拌大虾： 增强免疫力、促进肠蠕动、黄瓜凉拌鸡丝：温中益气、健脾开胃、雪碧黄瓜：开胃爽口【注意事项】1、脾胃虚寒者忌吃：黄瓜属于凉性食物，存在脾胃虚寒的人群应该尽量避免吃 。2、对黄瓜过敏者忌吃：如果对黄瓜过敏，应该避免食用，否则容易引起过敏反应等。3、忌大量吃：黄瓜性凉，且含有丰富的膳食纤维，平时应该尽量避免大量进食，否则容易刺激胃肠，引起腹痛、消化不良、腹胀等不适感。',
+					category: 'hypertension'
+				},
+				3: {
+					title: '凉拌苦瓜',
+					image: 'img/foot5.jpg',
+					description: '苦瓜（Bitter melon）为葫芦科一年生攀缘草本植物的果实，具有特殊的苦味，因此也受到大众的喜爱。苦瓜不仅口味特殊，还具有丰富的营养物质。苦瓜虽苦，却从不会把苦味传给其他食物，所以它又有“君子菜”的雅称[偷笑R]。具有降低血糖、促进食欲、美容养颜等功效。',
+					category: 'hypertension'
+				},
+				4: {
+					title: '西兰花炒牛肉',
+					image: 'img/foot6.jpg',
+					description: '西兰花虽是一种常见的蔬菜，但却拥有着很高的营养成分，还具备防癌抗癌之作用，含有丰富的矿物质和维他命C等。牛肉含有丰富的蛋白质和氨基酸，搭配西兰花能有效补充营养，适合糖尿病患者调节膳食结构。',
+					category: 'diabetes'
+				},
+				5: {
+					title: '冬瓜玉米汤',
+					image: 'img/foot03.jpg',
+					description: '冬瓜是果蔬中唯一不含脂肪的蔬菜，含糖量极低，其所含的丙醇二酸可抑制糖类物质转化为脂肪，其所含的丙醇二酸可抑制糖类物质转化为脂肪，有利水消肿作用，冬瓜中可溶性膳食纤维比较丰富，可以降低主食中的糖类在肠道中消化、吸收的速度，减少脂肪的吸收，并能加速代谢废物的排出，对稳定糖尿病患者餐后血糖和控制体重都有辅助效果；降血脂：冬瓜含维生素C,可影响高密度脂蛋白含量，将胆固醇带回胆囊转变成胆酸，经由肠道排出，从而降低胆固醇，有利于降血脂。冬瓜含有维生素E,维生素E是一种抗氧化剂，能够避免低密度脂蛋白在血管壁附着，调节血脂代谢，达到降低血脂的目的；',
+					category: 'diabetes'
+				},
+				6: {
+					title: '番茄牛腩',
+					image: 'img/foot04.jpg',
+					description: '番茄炖牛腩是一道营养丰富、口感鲜美的经典菜肴，不仅美味，还具有多种养生功效，蛋白质丰富：牛腩富含高质量的动物蛋白，是人体组织修复和生长的重要基础，有助于维持肌肉健康、增强体力。维生素C含量高：番茄中维生素C的含量丰富，有助于提高人体免疫力，促进胶原蛋白的合成，使皮肤保持弹性与光泽。铁元素补充：牛腩中含有丰富的铁元素，对于预防缺铁性贫血、改善血液循环具有显著效果。膳食纤维助消化：番茄和牛腩中都含有一定量的膳食纤维，能够促进肠道蠕动，改善消化功能，预防便秘。营养均衡搭配：这道菜荤素搭配，既提供了丰富的动物蛋白和脂肪，又补充了植物性维生素和矿物质，营养均衡。',
+					category: 'diabetes'
+				},
+				7: {
+					title: '草莓酸奶',
+					image: 'img/foot05.jpg',
+					description: '草莓富含丰富的抗氧化物质、维生素和膳食纤维，可以促进新陈代谢，有助于控制体重，搭配低糖酸奶口感清爽，营养丰富，适合肥胖人群作为健康甜点选择。',
+					category: 'obesity'
+				},
+				8: {
+					title: '虾仁鸡胸肉波奇饭',
+					image: 'img/foot02.jpg',
+					description: '食材：糙米饭 虾仁 鸡胸肉 玉米粒 蟹味菇 西兰花 圣女果这些都是低糖低卡的食物鸡胸肉切块，加入一勺料酒、一勺生抽、适量黑胡椒粉抓匀腌制十五分钟；虾仁处理干净，加入适量黑胡椒粉腌制，西兰花和玉米粒下锅煮熟盛出备用；蟹味菇下锅加入适量黑胡椒炒熟；虾仁和鸡胸肉各下锅炒熟盛出备用；三色糙米饭装盘，所有食材装盘即可。',
+					category: 'obesity'
+				},
+				9: {
+					title: '牛排波奇饭',
+					image: 'img/foot01.jpg',
+					description: '这份低脂高蛋白的牛排波奇饭，减脂增肌都很合适，虾仁10个|静腌西冷 牛排一块|鸡蛋1个|黄瓜|西兰花|玉米粒|圣女果|口蘑|泡.菜|芝麻海苔。油醋汁配方：橄榄油2勺＋生抽2勺＋柠檬汁或醋1勺＋蜂蜜1勺＋黑胡椒、盐适量【做法】大米：藜麦1:1煮熟，西蓝花和玉米焯熟，煮一个水波蛋：水中加入白醋煮开后，用勺子在水中打圈形成旋涡状，鸡蛋打入碗中再倒入漩涡中，转小火煮3分钟即可捞出。牛排解冻后用厨房纸吸干水分，将牛排两面各煎1分钟，煎熟后包好锡纸静置一会再切条。大碗里藜麦饭打底，码上食材，中间放入水波蛋，撒上芝麻海苔。倒入油醋汁，拌匀开吃。',
+					category: 'obesity'
+				}
+			};
+
+			// 分类的饮食提示
+			const dietTips = {
+				hypertension: '高血压患者饮食建议：少盐少油，戒烟限酒，多摄入新鲜蔬菜和水果，保持体重稳定，适量运动。',
+				diabetes: '糖尿病患者饮食建议：控制碳水化合物摄入，避免高糖高脂食物，少量多餐，保持血糖稳定。',
+				obesity: '肥胖患者饮食建议：减少高热量食物，多吃蔬菜和高纤维食物，控制总能量摄入，配合适度运动。'
+			};
+
+			// 推荐一周餐食按患者类型
+			const weeklyMeals = {
+				hypertension: [
+					'img/tjfoot1.jpg',
+					'img/tjfoot2.jpg',
+					'img/tjfoot3.jpg',
+					'img/tjfoot4.jpg',
+				],
+				diabetes: [
+					'img/tjfoot001.jpg',
+					'img/tjfoot002.jpg',
+					'img/tjfoot003.jpg',
+					'img/tjfoot004.jpg',
+					'img/tjfoot005.jpg',
+				],
+				obesity: [
+					'img/tjfoot03.jpg',
+					'img/tjfoot04.jpg',
+					'img/tjfoot05.jpg',
+					'img/tjfoot02.jpg',
+					'img/tjfoot01.jpg',
+				]
+			};
+
+			// 获取参数
+			const params = new URLSearchParams(window.location.search);
+			const id = params.get('id');
+			const category = params.get('category');
+
+			// 渲染内容
+			if (foodData[id]) {
+				const food = foodData[id];
+				const tipsKey = category || food.category;
+
+				document.getElementById('food-title').textContent = food.title;
+				document.getElementById('food-image').src = food.image;
+				document.getElementById('food-description').textContent = food.description;
+				document.getElementById('diet-tips').textContent = dietTips[tipsKey] || '';
+
+				// 填充按类别的一周餐食轮播
+				const carouselInner = document.getElementById('meal-carousel-inner');
+				const meals = weeklyMeals[tipsKey] || [];
+				meals.forEach((imgSrc, index) => {
+					const item = document.createElement('div');
+					item.className = 'carousel-item' + (index === 0 ? ' active' : '');
+					item.innerHTML = `<img src="${imgSrc}" class="meal-image" alt="每日餐食">`;
+					carouselInner.appendChild(item);
+				});
+
+			} else {
+				document.getElementById('food-title').textContent = '未找到该食物信息';
+				document.getElementById('food-image').style.display = 'none';
+				document.getElementById('food-description').textContent = '请返回推荐列表重新选择。';
+			}
+
+			// 返回链接
+			const backLink = category ? `index.html#${category}` : 'index.html';
+			document.getElementById('back-link').href = backLink;
+		</script>
+
+		<script src="bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
+
+	</body>
+</html>

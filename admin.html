@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>后台管理</title>
+  <link rel="stylesheet" href="bootstrap-5.3.6-dist/css/bootstrap.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/admin.js"></script>
+  <style>
+    /* Banner 渐变背景条 */
+    .admin-banner {
+      width: 100%;
+      padding: 15px 6;
+      background: linear-gradient(to bottom, #c8e6c9 0%, #f0f8f0 100%);
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    /* 标题小框 */
+    .diary-title {
+      display: inline-block;
+      padding: 10px 30px;
+      border-bottom: 4px solid darkseagreen;
+      background: #fbfada;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Banner + 小标题 -->
+  <div class="admin-banner">
+    <h1 class="admin-title">后台管理</h1>
+  </div>
+
+  <div class="container mb-5">
+    <div class="row mb-4">
+      <div class="col-md-9">
+        <h3>用户列表</h3>
+        <p class="text-muted">点击用户查看详细数据</p>
+      </div>
+      <div class="col-md-3 text-end">
+        <button class="btn btn-primary" onclick="showDataManager()">
+          <i class="bi bi-database"></i> 数据管理
+        </button>
+      </div>
+    </div>
+    
+    <div id="userListSection">
+      <div id="userList"></div>
+    </div>
+
+    <div id="dataManagerSection" style="display: none;">
+      <div class="mb-3">
+        <button class="btn btn-secondary btn-sm" onclick="hideDataManager()">
+          ← 返回用户列表
+        </button>
+      </div>
+      
+      <div class="alert alert-info">
+        <h5>📋 数据管理说明</h5>
+        <p class="mb-1"><strong>用途：</strong>将选中用户的数据导出，打包到其他电脑上展示</p>
+        <p class="mb-0"><strong>步骤：</strong>选择用户 → 导出数据 → 放入data文件夹 → 打包项目 → 在新电脑上自动加载</p>
+      </div>
+      
+      <div class="card mb-3">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">选择要导出的用户</h5>
+        </div>
+        <div class="card-body">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="selectAllUsers" onchange="toggleAllUsers()">
+            <label class="form-check-label" for="selectAllUsers">
+              <strong>全选</strong>
+            </label>
+          </div>
+          <hr>
+          <div id="userSelectionList"></div>
+        </div>
+      </div>
+      
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header bg-success text-white">
+              <h6 class="mb-0">导出选中用户数据</h6>
+            </div>
+            <div class="card-body">
+              <p class="small">将选中用户的数据导出为JSON文件</p>
+              <button class="btn btn-success" onclick="exportSelectedUsersData()">
+                <i class="bi bi-download"></i> 导出选中数据
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header bg-info text-white">
+              <h6 class="mb-0">数据统计</h6>
+            </div>
+            <div class="card-body">
+              <div id="systemDataStats" class="small"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header bg-warning text-white">
+              <h6 class="mb-0">重新加载初始数据</h6>
+            </div>
+            <div class="card-body">
+              <p class="small text-danger">⚠️ 此操作会清除当前浏览器中的所有数据</p>
+              <button class="btn btn-warning" onclick="reloadSystemData()">
+                <i class="bi bi-arrow-clockwise"></i> 清除并重新加载
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header bg-danger text-white">
+              <h6 class="mb-0">清除所有数据</h6>
+            </div>
+            <div class="card-body">
+              <p class="small text-danger">⚠️ 此操作会永久删除所有数据</p>
+              <button class="btn btn-danger" onclick="clearSystemData()">
+                <i class="bi bi-trash"></i> 清除所有数据
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <h6 class="mb-0">当前数据预览</h6>
+        </div>
+        <div class="card-body">
+          <pre id="systemDataPreview" style="max-height: 300px; overflow-y: auto; background: #f8f9fa; padding: 10px; border-radius: 5px; font-size: 12px;"></pre>
+        </div>
+      </div>
+    </div>
+
+    <div id="userDetailSection" style="display: none;">
+      <div class="alert alert-info">
+        <strong>当前查看用户：</strong><span id="currentViewUser"></span>
+        <button class="btn btn-sm btn-secondary float-end" onclick="backToUserList()">返回用户列表</button>
+      </div>
+
+      <ul class="nav nav-tabs mb-3" id="dataTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="diet-tab" data-bs-toggle="tab" data-bs-target="#dietTab" type="button">饮食记录</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="health-tab" data-bs-toggle="tab" data-bs-target="#healthTab" type="button">健康指标</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="goal-tab" data-bs-toggle="tab" data-bs-target="#goalTab" type="button">健康目标</button>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="dataTabContent">
+        <div class="tab-pane fade show active" id="dietTab" role="tabpanel">
+          <div id="dietRecordsTable"></div>
+          <div id="dietChart" class="mt-4" style="max-width: 800px; margin: 0 auto;"></div>
+        </div>
+        <div class="tab-pane fade" id="healthTab" role="tabpanel">
+          <div id="healthRecordsTable"></div>
+          <div id="healthChart" class="mt-4" style="max-width: 800px; margin: 0 auto;"></div>
+        </div>
+        <div class="tab-pane fade" id="goalTab" role="tabpanel">
+          <div id="healthGoalsTable"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/DataInitializer.js"></script>
+  <script src="js/admin.js"></script>
+

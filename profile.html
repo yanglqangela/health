@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>个人中心 | 饮食健康管理系统</title>
+  <link rel="stylesheet" href="bootstrap-5.3.6-dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 顶部横幅背景 -->
+  <div class="hero"></div>
+
+  <!-- 个人中心主体 -->
+  <div class="container profile-container">
+    <div class="row">
+      <!-- 左侧：头像+基本信息 -->
+      <div class="col-md-4 text-center">
+        <img src="img/default-avatar.png" alt="头像" id="avatarPreview" class="avatar mb-3">
+        <div>
+          <label class="btn btn-outline-primary btn-sm">
+            上传头像<input type="file" id="avatarInput" accept="image/*" hidden>
+          </label>
+        </div>
+        <h4 id="nicknameShow" class="mt-3"></h4>
+        <p id="genderShow"></p>
+        <p id="ageShow"></p>
+        <p id="contactShow"></p>
+      </div>
+
+      <!-- 右侧：详细信息表单 -->
+      <div class="col-md-8">
+        <h5>详细信息</h5>
+        <table class="table info-table">
+          <tbody>
+            <tr><th>账户名</th><td><input class="form-control" id="username" readonly></td></tr>
+            <tr><th>密码</th><td><input class="form-control" id="password"></td></tr>
+            <tr><th>昵称</th><td><input class="form-control" id="nickname"></td></tr>
+            <tr><th>性别</th><td>
+              <select id="gender" class="form-select">
+                <option>男</option>
+                <option>女</option>
+              </select>
+            </td></tr>
+            <tr><th>年龄</th><td><input class="form-control" id="age" type="number"></td></tr>
+            <tr><th>联系方式</th><td><input class="form-control" id="contact"></td></tr>
+            <tr><th>身高(cm)</th><td><input class="form-control" id="height" type="number"></td></tr>
+            <tr><th>体重(kg)</th><td><input class="form-control" id="weight" type="number" step="0.1"></td></tr>
+            <tr><th>活动水平</th><td>
+              <select id="activityLevel" class="form-select">
+                <option value="sedentary">久坐（几乎不运动）</option>
+                <option value="light">轻度活动（每周1-3天）</option>
+                <option value="moderate" selected>中度活动（每周3-5天）</option>
+                <option value="active">重度活动（每周6-7天）</option>
+                <option value="very_active">极重度活动（体力劳动）</option>
+              </select>
+            </td></tr>
+            <tr><th>健康状况</th><td>
+              <select id="healthCondition" class="form-select">
+                <option value="normal">正常</option>
+                <option value="hypertension">高血压</option>
+                <option value="diabetes">糖尿病</option>
+                <option value="obesity">肥胖</option>
+              </select>
+            </td></tr>
+          </tbody>
+        </table>
+        <button class="btn btn-success" onclick="saveProfile()">保存信息</button>
+		<button class="btn btn-secondary ms-2" onclick="goHome()">返回首页</button>
+		
+		<!-- 退出登录 -->
+		<button class="btn btn-danger ms-2" onclick="logout()">退出登录</button>
+      </div>
+    </div>
+
+    <!-- 管理员专属：新增管理员 -->
+    <div id="adminSection" class="mt-4" style="display:none;">
+      <h5>添加新管理员</h5>
+      <div class="row">
+        <div class="col-md-5 mb-2">
+          <input id="newAdminUsername" class="form-control" placeholder="用户名">
+        </div>
+        <div class="col-md-5 mb-2">
+          <input id="newAdminPassword" type="password" class="form-control" placeholder="密码">
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary w-100" onclick="addAdmin()">添加</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/DataStorage.js"></script>
+  <script src="js/NutritionCalculator.js"></script>
+  <script>
+    // 顶部：读取登录信息
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+    if (!currentUser.username) window.location.href = 'login.html';
+    
+    // 填充信息
+    document.getElementById('username').value = currentUser.username;
+    document.getElementById('password').value = currentUser.password || '';
+    document.getElementById('nickname').value = currentUser.nickname || '';
+    document.getElementById('gender').value = currentUser.gender || '男';
+    document.getElementById('age').value = currentUser.age || '';
+    document.getElementById('contact').value = currentUser.contact || '';
+    document.getElementById('height').value = currentUser.height || '';
+    document.getElementById('weight').value = currentUser.weight || '';
+    document.getElementById('activityLevel').value = currentUser.activityLevel || 'moderate';
+    document.getElementById('healthCondition').value = currentUser.healthCondition || 'normal';
+    if (currentUser.avatar) {
+      document.getElementById('avatarPreview').src = currentUser.avatar;
+    }
+    // 左侧显示
+    document.getElementById('nicknameShow').innerText = currentUser.nickname || '未设置昵称';
+    document.getElementById('genderShow').innerText = '性别: ' + (currentUser.gender || '未设置');
+    document.getElementById('ageShow').innerText = '年龄: ' + (currentUser.age || '未设置');
+    document.getElementById('contactShow').innerText = '联系方式: ' + (currentUser.contact || '未设置');
+    
+    // 上传头像
+    document.getElementById('avatarInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function (evt) {
+          document.getElementById('avatarPreview').src = evt.target.result;
+          currentUser.avatar = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+    
+    // 保存信息
+    function saveProfile() {
+      currentUser.password = document.getElementById('password').value;
+      currentUser.nickname = document.getElementById('nickname').value;
+      currentUser.gender = document.getElementById('gender').value;
+      currentUser.age = parseInt(document.getElementById('age').value) || 0;
+      currentUser.contact = document.getElementById('contact').value;
+      currentUser.height = parseFloat(document.getElementById('height').value) || 0;
+      currentUser.weight = parseFloat(document.getElementById('weight').value) || 0;
+      currentUser.activityLevel = document.getElementById('activityLevel').value;
+      currentUser.healthCondition = document.getElementById('healthCondition').value;
+    
+      // 更新左侧显示
+      document.getElementById('nicknameShow').innerText = currentUser.nickname;
+      document.getElementById('genderShow').innerText = '性别: ' + currentUser.gender;
+      document.getElementById('ageShow').innerText = '年龄: ' + currentUser.age;
+      document.getElementById('contactShow').innerText = '联系方式: ' + currentUser.contact;
+    
+      // 保存到 localStorage（同时更新两个key）
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+      users = users.map(u => u.username === currentUser.username ? currentUser : u);
+      localStorage.setItem('users', JSON.stringify(users));
+      alert('保存成功！');
+      
+      showRecommendedIntake();
+    }
+    
+    function showRecommendedIntake() {
+      if (!currentUser.age || !currentUser.weight || !currentUser.height) return;
+      
+      const recommended = NutritionCalculator.getRecommendedIntake(currentUser);
+      const html = `
+        <div class="alert alert-info mt-3">
+          <h6>您的推荐每日摄入量：</h6>
+          <p class="mb-1">热量: ${recommended.calories} kcal</p>
+          <p class="mb-1">碳水化合物: ${recommended.carbs} g</p>
+          <p class="mb-1">蛋白质: ${recommended.protein} g</p>
+          <p class="mb-0">脂肪: ${recommended.fat} g</p>
+        </div>
+      `;
+      
+      const existing = document.getElementById('recommendedIntake');
+      if (existing) {
+        existing.innerHTML = html;
+      } else {
+        const div = document.createElement('div');
+        div.id = 'recommendedIntake';
+        div.innerHTML = html;
+        document.querySelector('.col-md-8').appendChild(div);
+      }
+    }
+    
+    if (currentUser.age && currentUser.weight && currentUser.height) {
+      showRecommendedIntake();
+    }
+    
+    // 管理员专属
+    if (currentUser.isAdmin) {
+      document.getElementById('adminSection').style.display = 'block';
+    }
+    
+    function addAdmin() {
+      const u = document.getElementById('newAdminUsername').value;
+      const p = document.getElementById('newAdminPassword').value;
+      if (!u || !p) return alert('请填写完整');
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+      if (users.some(x => x.username === u)) return alert('已存在');
+      users.push({ username: u, password: p, isAdmin: true });
+      localStorage.setItem('users', JSON.stringify(users));
+      alert('已添加新管理员');
+      document.getElementById('newAdminUsername').value = '';
+      document.getElementById('newAdminPassword').value = '';
+    }
+    
+    function goHome() {
+      window.location.href = 'index.html';
+    }
+    
+    function logout() {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'index.html';
+    }
+
+
+  </script>
+
+</body>
+</html>

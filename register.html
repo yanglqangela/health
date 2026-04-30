@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>用户注册 | 饮食健康管理系统</title>
+		<link rel="stylesheet" href="bootstrap-5.3.6-dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+	<body>
+		<div class="container">
+			<div class="login-container">
+				<h2>用户注册</h2>
+
+				<!-- 注册表单 -->
+				<form>
+					<div class="mb-3">
+						<input type="text" class="form-control" id="registerUsername" placeholder="输入用户名" required>
+					</div>
+					<div class="mb-3">
+						<input type="password" class="form-control" id="registerPassword" placeholder="输入密码" required>
+					</div>
+					<div class="mb-3">
+						<input type="password" class="form-control" id="registerConfirmPassword" placeholder="确认密码"
+							required>
+					</div>
+					<button type="button" class="btn btn-login" onclick="register()">立即注册</button>
+				</form>
+
+				<div class="form-text">
+					<a href="login.html">已有账号？登录</a>
+				</div>
+			</div>
+		</div>
+
+		<script src="bootstrap-5.3.6-dist/js/bootstrap.min.js"></script>
+		<script>
+			// 注册功能
+			function register() {
+			  const username = document.getElementById('registerUsername').value;
+			  const password = document.getElementById('registerPassword').value;
+			  const confirmPassword = document.getElementById('registerConfirmPassword').value;
+			
+			  if (!username || !password || !confirmPassword) {
+			    alert('请填写完整信息！');
+			    return;
+			  }
+			
+			  if (password !== confirmPassword) {
+			    alert('两次密码不一致！');
+			    return;
+			  }
+			
+			  let users = JSON.parse(localStorage.getItem('users')) || [];
+			  if (users.some(u => u.username === username)) {
+			    alert('用户名已存在，请选择其他用户名！');
+			    return;
+			  }
+			
+			  // 添加用户，自动判断是否是 admin
+			  users.push({
+			    username: username,
+			    password: password,
+			    isAdmin: (username === 'admin-ylh')
+			  });
+			
+			  localStorage.setItem('users', JSON.stringify(users));
+			  alert('注册成功！');
+			  window.location.href = 'login.html';
+			}
+
+
+		</script>
+	</body>
+</html>
