@@ -50,7 +50,7 @@
   <nav class="navbar navbar-expand-md fixed-top navbar-dark" style="background-color: #e0ecde;">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.html" style="color: forestgreen;">饮食健康管理系统</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="切换导航">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
@@ -93,118 +93,124 @@
     </button>
   </div>
 
-  <div class="container py-5" id="recommendations">
-    <h2 class="text-center mb-2"><span class="section-title">饮食推荐</span></h2>
-    <p class="text-center text-muted mb-4">按人群类型浏览菜谱，点击查看详情与一周餐食示例</p>
+  <!-- 轮播图后 -->
+  <div class="container my-5">
+    <h2 class="text-center mb-4">
+      <span class="section-title">饮食推荐</span>
+    </h2>
 
-    <div class="diet-tabs" role="tablist">
-      <div class="diet-tab active" data-target="hypertension" role="tab" tabindex="0">高血压人群</div>
-      <div class="diet-tab" data-target="diabetes" role="tab" tabindex="0">糖尿病人群</div>
-      <div class="diet-tab" data-target="obesity" role="tab" tabindex="0">肥胖人群</div>
+    <!-- Tabs for switching categories -->
+    <div class="diet-tabs">
+      <div class="diet-tab active" data-target="hypertension">高血压患者</div>
+      <div class="diet-tab" data-target="diabetes">糖尿病患者</div>
+      <div class="diet-tab" data-target="obesity">肥胖患者</div>
     </div>
 
+    <!-- High Blood Pressure -->
     <div id="hypertension" class="diet-content active">
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm">
-            <img src="img/foot2.jpg" class="card-img-top" alt="白芍秋葵" />
-            <div class="card-body d-flex flex-column">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="img/foot2.jpg" class="card-img-top" alt="食物1" style="height:200px; object-fit:cover;">
+            <div class="card-body">
               <h5 class="card-title">白芍秋葵</h5>
-              <p class="card-text small">秋葵营养丰富，适合高血压患者作为蔬菜搭配。</p>
-              <a href="detail.html?id=1&category=hypertension" class="btn btn-success btn-read-more mt-auto">查看详情</a>
+              <p class="card-text">秋葵又名黄秋葵、黄蜀葵、羊角豆，为锦葵科一年生草本植物...</p>
+              <a href="detail.html?id=1&category=hypertension" class="btn btn-success">了解更多</a>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm">
-            <img src="img/foot3.jpg" class="card-img-top" alt="黄瓜炒虾仁" />
-            <div class="card-body d-flex flex-column">
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="img/foot3.jpg" class="card-img-top" alt="食物2" style="height:200px; object-fit:cover;">
+            <div class="card-body">
               <h5 class="card-title">黄瓜炒虾仁</h5>
-              <p class="card-text small">清热利水，低脂高蛋白搭配。</p>
-              <a href="detail.html?id=2&category=hypertension" class="btn btn-success btn-read-more mt-auto">查看详情</a>
+              <p class="card-text">食物也是一味"药"—— 黄瓜，别名： 胡瓜、玉瓜、刺瓜，性味： 味甘，性凉；肺、脾、胃经，功效： 清热，利水，解毒，《日用本草》："除胸中热，解烦渴，利水道。"黄瓜+虾仁：清热解暑、益气健脾...</p>
+             <a href="detail.html?id=2&category=hypertension" class="btn btn-success">了解更多</a>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm">
-            <img src="img/foot5.jpg" class="card-img-top" alt="凉拌苦瓜" />
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title">凉拌苦瓜</h5>
-              <p class="card-text small">苦瓜有助于调节代谢，清爽少油。</p>
-              <a href="detail.html?id=3&category=hypertension" class="btn btn-success btn-read-more mt-auto">查看详情</a>
-            </div>
-          </div>
-        </div>
+		  <div class="col-md-4 mb-4">
+		    <div class="card">
+		      <img src="img/foot5.jpg" class="card-img-top" alt="食物3" style="height:200px; object-fit:cover;">
+		      <div class="card-body">
+		        <h5 class="card-title">凉拌苦瓜</h5>
+		        <p class="card-text">苦瓜（Bitter melon）为葫芦科一年生攀缘草本植物的果实，具有特殊的苦味，因此也受到大众的喜爱。...</p>
+		      <a href="detail.html?id=3&category=hypertension" class="btn btn-success">了解更多</a>
+		      </div>
+		    </div>
+		  </div>
       </div>
     </div>
 
+    <!-- Diabetes -->
     <div id="diabetes" class="diet-content">
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm">
-            <img src="img/foot6.jpg" class="card-img-top" alt="西兰花炒牛肉" />
-            <div class="card-body d-flex flex-column">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="img/foot6.jpg" class="card-img-top" alt="食物1" style="height:200px; object-fit:cover;">
+            <div class="card-body">
               <h5 class="card-title">西兰花炒牛肉</h5>
-              <p class="card-text small">高蛋白与蔬菜搭配，利于血糖与营养平衡。</p>
-              <a href="detail.html?id=4&category=diabetes" class="btn btn-success btn-read-more mt-auto">查看详情</a>
+              <p class="card-text">西兰花含有丰富的矿物质，如钙、铁、锌等...</p>
+              <a href="detail.html?id=4&category=diabetes" class="btn btn-success">了解更多</a>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm">
-            <img src="img/foot03.jpg" class="card-img-top" alt="冬瓜玉米汤" />
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title">冬瓜玉米汤</h5>
-              <p class="card-text small">低脂高纤维，适合控糖饮食。</p>
-              <a href="detail.html?id=5&category=diabetes" class="btn btn-success btn-read-more mt-auto">查看详情</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm">
-            <img src="img/foot04.jpg" class="card-img-top" alt="番茄牛腩" />
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title">番茄牛腩</h5>
-              <p class="card-text small">荤素搭配，补充维生素与优质蛋白。</p>
-              <a href="detail.html?id=6&category=diabetes" class="btn btn-success btn-read-more mt-auto">查看详情</a>
-            </div>
-          </div>
-        </div>
+		  <div class="col-md-4 mb-4">
+		    <div class="card">
+		      <img src="img/foot03.jpg" class="card-img-top" alt="食物2" style="height:200px; object-fit:cover;">
+		      <div class="card-body">
+		        <h5 class="card-title">冬瓜玉米汤</h5>
+		        <p class="card-text">冬瓜是果蔬中唯一不含脂肪的蔬菜，含糖量极低，其所含的丙醇二酸可抑制糖类物质转化为脂肪...</p>
+		        <a href="detail.html?id=5&category=diabetes" class="btn btn-success">了解更多</a>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="col-md-4 mb-4">
+		    <div class="card">
+		      <img src="img/foot04.jpg" class="card-img-top" alt="食物3" style="height:200px; object-fit:cover;">
+		      <div class="card-body">
+		        <h5 class="card-title">番茄牛腩</h5>
+		        <p class="card-text">番茄炖牛腩是一道营养丰富、口感鲜美的经典菜肴，不仅美味，还具有多种养生功效...</p>
+		        <a href="detail.html?id=6&category=diabetes" class="btn btn-success">了解更多</a>
+		      </div>
+		    </div>
+		  </div>
       </div>
     </div>
 
+    <!-- Obesity -->
     <div id="obesity" class="diet-content">
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm">
-            <img src="img/foot05.jpg" class="card-img-top" alt="草莓酸奶" />
-            <div class="card-body d-flex flex-column">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="img/foot05.jpg" class="card-img-top" alt="食物1" style="height:200px; object-fit:cover;">
+            <div class="card-body">
               <h5 class="card-title">草莓酸奶</h5>
-              <p class="card-text small">低糖酸奶与水果，适合控制能量摄入。</p>
-              <a href="detail.html?id=7&category=obesity" class="btn btn-success btn-read-more mt-auto">查看详情</a>
+              <p class="card-text">草莓含有丰富的抗氧化物质，可以促进新陈代谢...</p>
+              <a href="detail.html?id=7&category=obesity" class="btn btn-success">了解更多</a>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm">
-            <img src="img/foot02.jpg" class="card-img-top" alt="虾仁鸡胸肉波奇饭" />
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title">虾仁鸡胸肉波奇饭</h5>
-              <p class="card-text small">低脂高蛋白，饱腹感强。</p>
-              <a href="detail.html?id=8&category=obesity" class="btn btn-success btn-read-more mt-auto">查看详情</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm">
-            <img src="img/foot01.jpg" class="card-img-top" alt="牛排波奇饭" />
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title">牛排波奇饭</h5>
-              <p class="card-text small">藜麦饭搭配多样蔬菜，适合减脂增肌。</p>
-              <a href="detail.html?id=9&category=obesity" class="btn btn-success btn-read-more mt-auto">查看详情</a>
-            </div>
-          </div>
-        </div>
+		  <div class="col-md-4 mb-4">
+		    <div class="card">
+		      <img src="img/foot02.jpg" class="card-img-top" alt="食物2" style="height:200px; object-fit:cover;">
+		      <div class="card-body">
+		        <h5 class="card-title">虾仁鸡胸肉波奇饭</h5>
+		        <p class="card-text">食材：糙米饭 虾仁 鸡胸肉 玉米粒 蟹味菇 西兰花 圣女果这些都是低糖低卡的食物...</p>
+		        <a href="detail.html?id=8&category=obesity" class="btn btn-success">了解更多</a>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="col-md-4 mb-4">
+		    <div class="card">
+		      <img src="img/foot01.jpg" class="card-img-top" alt="食物3" style="height:200px; object-fit:cover;">
+		      <div class="card-body">
+		        <h5 class="card-title">牛排波奇饭</h5>
+		        <p class="card-text">这份低脂高蛋白的牛排波奇饭，减脂增肌都很合适...</p>
+		        <a href="detail.html?id=9&category=obesity" class="btn btn-success">了解更多</a>
+		      </div>
+		    </div>
+		  </div>
       </div>
     </div>
   </div>
@@ -337,50 +343,52 @@
   <script src="bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/DataInitializer.js"></script>
   <script>
-    DataInitializer.loadInitialData();
-    
-    (function () {
-      const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
-      if (user && user.username) {
-        document.getElementById('nav-login-item').classList.add('d-none');
-        document.getElementById('nav-profile-item').classList.remove('d-none');
-      }
-
+    // 确保DOM完全加载后再执行
+    document.addEventListener('DOMContentLoaded', function() {
+      DataInitializer.loadInitialData();
+      
+      // Tab switching
       const tabs = document.querySelectorAll('.diet-tab');
       const contents = document.querySelectorAll('.diet-content');
 
-      function activateTab(targetId) {
-        tabs.forEach(function (t) {
-          t.classList.toggle('active', t.getAttribute('data-target') === targetId);
-        });
-        contents.forEach(function (c) {
-          c.classList.toggle('active', c.id === targetId);
-        });
-      }
+      console.log('找到标签数量:', tabs.length);
+      console.log('找到内容数量:', contents.length);
 
-      tabs.forEach(function (tab) {
-        tab.addEventListener('click', function () {
-          var id = tab.getAttribute('data-target');
-          activateTab(id);
-          location.hash = id;
-        });
-        tab.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            tab.click();
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          console.log('点击了标签:', tab.dataset.target);
+          
+          tabs.forEach(t => t.classList.remove('active'));
+          contents.forEach(c => c.classList.remove('active'));
+
+          tab.classList.add('active');
+          const targetContent = document.getElementById(tab.dataset.target);
+          if (targetContent) {
+            targetContent.classList.add('active');
+            console.log('已激活内容:', tab.dataset.target);
+          } else {
+            console.error('找不到目标内容:', tab.dataset.target);
           }
         });
       });
-
-      window.addEventListener('load', function () {
-        var hash = location.hash.replace(/^#/, '');
-        if (hash === 'hypertension' || hash === 'diabetes' || hash === 'obesity') {
-          activateTab(hash);
-          var el = document.getElementById('recommendations');
-          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+      if (!currentUser.isAdmin) {
+        // 如果不是管理员，隐藏后台入口
+        const adminLink = document.querySelector('a[href="admin.html"]');
+        if (adminLink) adminLink.style.display = 'none';
+      }
+      
+      document.querySelectorAll('.nav-link').forEach(link => {
+        const linkPage = link.getAttribute('href').split('/').pop();
+        const currentPage = window.location.pathname.split('/').pop();
+        if (linkPage === currentPage) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
         }
       });
-    })();
+    });
   </script>
 </body>
 </html>
