@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/media.css">
+  <title>联系我们 - 饮食健康管理系统</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="bootstrap-5.3.6-dist/css/bootstrap.min.css" />
+
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: url('img/back6.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    
+    .container {
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 12px;
+      padding: 20px;
+      animation: fadeIn 1s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    h2, h4, p, label {
+      color: #2f855a;
+      font-weight: bold;
+    }
+    
+    .card {
+      background: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border-radius: 12px;
+    }
+    
+    textarea, input {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    
+    button {
+      border-radius: 9999px;
+      transition: transform 0.2s;
+    }
+    
+    button:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+    
+    #aiAnswer {
+      background: rgba(255, 255, 255, 0.6);
+      transition: all 0.5s;
+    }
+    
+    #ai-section,
+    #messages-section {
+      transition: all 0.3s ease;
+    }
+    
+    #ai-section.wide,
+    #messages-section.wide {
+      width: 100%;
+    }
+    
+    #ai-section.narrow,
+    #messages-section.narrow {
+      width: calc(100% - 420px);
+      margin-left: 0;
+      margin-right: auto;
+    }
+
+
+
+
+  </style>
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar navbar-expand-md fixed-top navbar-dark" style="background-color: #e0ecde;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html" style="color: forestgreen;">饮食健康管理系统</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item"><a class="nav-link" href="index.html" style="color: darkseagreen;">首页</a></li>
+          <li class="nav-item"><a class="nav-link" href="diet.html" style="color: darkseagreen;">饮食日记</a></li>
+          <li class="nav-item"><a class="nav-link" href="goal.html" style="color: darkseagreen;">健康目标</a></li>
+          <li class="nav-item"><a class="nav-link" href="analysis.html" style="color: darkseagreen;">数据分析</a></li>
+          <li class="nav-item"><a class="nav-link" href="health.html" style="color: darkseagreen;">健康指标</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin.html" style="color: darkseagreen;">后台管理</a></li>
+          <li class="nav-item"><a class="nav-link active" href="contact.html" style="color: darkseagreen;">联系我们</a></li>
+        </ul>
+        <a href="login.html" class="btn btn-outline-light btn-sm me-2">登录/注册</a>
+        <a href="profile.html" class="nav-link" style="color: darkseagreen;">个人中心</a>
+      </div>
+    </div>
+  </nav>
+	
+	<!-- 固定右上角自动轮播 -->
+	<div id="floating-carousel" style="
+	  position: fixed;
+	  top: 20px;
+	  right: 20px;
+	  width: 450px;   /* 调大宽度 */
+	  height: 350px;  /* 可调高度 */
+	  z-index: 999;
+	  border-radius: 12px;
+	  overflow: hidden;
+	  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+	">
+	  <div id="standardCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
+	    <div class="carousel-inner">
+	      <div class="carousel-item active">
+	        <img src="img/task1.jpg" class="d-block w-100 rounded" alt="标准图1">
+	      </div>
+	      <div class="carousel-item">
+	        <img src="img/task3.jpg" class="d-block w-100 rounded" alt="标准图2">
+	      </div>
+	      <div class="carousel-item">
+	        <img src="img/task5.jpg" class="d-block w-100 rounded" alt="标准图3">
+	      </div>
+			<div class="carousel-item">
+			  <img src="img/task6.jpg" class="d-block w-100 rounded" alt="标准图4">
+			</div>
+			<div class="carousel-item">
+			  <img src="img/task7.jpg" class="d-block w-100 rounded" alt="标准图5">
+			</div>
+			<div class="carousel-item">
+			  <img src="img/task2.jpg" class="d-block w-100 rounded" alt="标准图6">
+			</div>
+			<div class="carousel-item">
+			  <img src="img/task4.jpg" class="d-block w-100 rounded" alt="标准图7">
+			</div>
+	    </div>
+	  </div>
+	</div>
+  <!-- 内容区 -->
+  <div class="container" style="margin-top: 80px;">
+	  <!-- ✅ 新增：Logo -->
+	    <div class="position-relative mb-4" data-aos="fade-down" style="display: inline-block;">
+	      <img src="img/log.png" alt="Logo" style="position: absolute; top: 10px; left: -50px; height: 100px;">
+	    </div>
+	  <div class="container" style="margin-top: 80px;">
+
+	      <h2 class="mb-4" data-aos="fade-down">用户交流区</h2>
+    <!-- ✅ 留言输入区已缩短 -->
+    <div class="mb-3" style="max-width: calc(100% - 420px);">
+      <textarea id="userMessage" class="form-control mb-2" rows="3"></textarea>
+      <button id="sendMessage" class="btn btn-success">提交留言</button>
+    </div>
+  
+    <!-- ✅ AI 区自动收缩 -->
+    <div id="ai-section">
+      <h4>AI 智能回复</h4>
+      <input id="aiQuestion" class="form-control mb-2">
+      <button id="askAI" class="btn btn-primary mb-4">提问 AI</button>
+      <div id="aiAnswer" class="alert alert-info d-none"></div>
+    </div>
+  
+    <!-- ✅ 留言列表自动收缩 -->
+    <div id="messages-section">
+      <h4>交流记录</h4>
+      <div id="messages"></div>
+    </div>
+  </div>
+
+
+  <!-- Toast 弹窗 -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+    <div id="liveToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+      <div class="d-flex">
+        <div class="toast-body">
+          留言已提交！🎉
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center py-4" style="background-color: #f8f9fa; color: #666; font-size: 0.9rem;">
+    &copy; 2025 饮食健康管理平台 版权所有
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+
+  <!-- 自定义 JS -->
+  <script>
+    const messageInput = document.getElementById('userMessage');
+    const sendMessage = document.getElementById('sendMessage');
+    const messagesDiv = document.getElementById('messages');
+    const toastEl = new bootstrap.Toast(document.getElementById('liveToast'));
+
+    let messages = JSON.parse(localStorage.getItem('messages')) || [];
+
+    function renderMessages() {
+      messagesDiv.innerHTML = '';
+      messages.forEach((msg, index) => {
+        const card = document.createElement('div');
+        card.className = 'card mb-3';
+        card.setAttribute('data-aos', 'fade-up');
+        card.innerHTML = `
+          <div class="card-body d-flex align-items-center">
+            <img src="https://api.dicebear.com/7.x/initials/svg?seed=User${index}" width="40" height="40" class="rounded-circle me-3">
+            <p class="mb-0">${msg}</p>
+          </div>
+        `;
+        messagesDiv.appendChild(card);
+      });
+      AOS.refresh();
+    }
+
+    sendMessage.onclick = () => {
+      const text = messageInput.value.trim();
+      if (text) {
+        messages.push(text);
+        localStorage.setItem('messages', JSON.stringify(messages));
+        renderMessages();
+        messageInput.value = '';
+        toastEl.show();
+      }
+    };
+
+    renderMessages();
+
+    // AI 回复
+    const aiQuestion = document.getElementById('aiQuestion');
+    const askAI = document.getElementById('askAI');
+    const aiAnswer = document.getElementById('aiAnswer');
+
+    askAI.onclick = () => {
+      const question = aiQuestion.value.trim();
+      if (question) {
+        let reply = "抱歉，我暂时无法理解您的问题，请换个说法试试。";
+        const lower = question.toLowerCase();
+
+        if (lower.includes("高血压")) {
+          reply = `【高血压饮食建议】
+1️⃣ 限盐：每日食盐不超过 5 克。
+2️⃣ 多蔬菜水果：摄入富含钾的食物，如香蕉、菠菜。
+3️⃣ 少油少糖：避免油炸食品，减少动物脂肪摄入。
+4️⃣ 保持适当运动，控制体重。
+5️⃣ 定期监测血压，遵医嘱用药。`;
+        } else if (lower.includes("糖尿病")) {
+          reply = `【糖尿病饮食建议】
+✅ 控制总热量，保证营养均衡。
+✅ 多吃粗粮、全谷物、低糖水果（如苹果）。
+✅ 少吃甜点和含糖饮料。
+✅ 少食多餐，定时定量。
+✅ 监测血糖，配合医生建议调整用药。`;
+        } else if (lower.includes("减肥")) {
+          reply = `【科学减肥方法】
+🥗 饮食方面：
+- 少吃高糖、高油、高盐食物。
+- 多摄入膳食纤维，如蔬菜、水果、燕麦。
+- 保证足够蛋白质摄入（如鸡胸肉、鱼、豆制品）。
+
+🏃‍♂️ 运动方面：
+- 每周至少 150 分钟中等强度有氧运动。
+- 增加力量训练，保持肌肉量。
+
+💡 生活习惯：
+- 保持充足睡眠，减轻压力，避免暴饮暴食。
+- 坚持健康生活方式，不盲目节食。`;
+        } else if (lower.includes("早餐")) {
+          reply = `【健康早餐建议】
+- 燕麦粥+煮鸡蛋+一份水果
+- 全麦面包+低脂牛奶+坚果
+- 避免油炸、过甜的早餐（如甜甜圈、蛋糕）
+- 营养均衡、少糖少油、易消化最适合开启一天`;
+        } else if (lower.includes("暴饮暴食") || lower.includes("暴食") || lower.includes("暴吃")) {
+          reply = `【如何避免暴饮暴食】
+🔑 原因分析：
+暴饮暴食常与情绪波动、压力大、作息紊乱有关。
+
+✅ 改善方法：
+1️⃣ 定时定量吃饭，不要长时间空腹。
+2️⃣ 减少高糖高油零食的储备，少囤积诱惑食物。
+3️⃣ 转移注意力，感到情绪低落或压力大时，可以尝试散步、听音乐或与朋友沟通。
+4️⃣ 记录饮食日记，意识到过量摄入的模式。
+5️⃣ 如有严重暴食倾向，建议咨询专业营养师或心理医生，必要时进行心理干预。
+
+🌿 小贴士：
+三餐规律，细嚼慢咽，让大脑有时间接收到“吃饱了”的信号，能有效预防暴食。`;
+        }
+
+        aiAnswer.innerText = reply;
+        aiAnswer.classList.remove('d-none');
+        aiAnswer.style.transform = "scale(0.8)";
+        aiAnswer.style.opacity = "0";
+        setTimeout(() => {
+          aiAnswer.style.transform = "scale(1)";
+          aiAnswer.style.opacity = "1";
+        }, 50);
+      }
+    };
+	
+	window.addEventListener('scroll', () => {
+	  const scrollY = window.scrollY;
+	  const threshold = 200;
+	
+	  const aiSection = document.getElementById('ai-section');
+	  const messagesSection = document.getElementById('messages-section');
+	
+	  if (scrollY > threshold) {
+	    aiSection.classList.remove('wide');
+	    aiSection.classList.add('narrow');
+	    messagesSection.classList.remove('wide');
+	    messagesSection.classList.add('narrow');
+	  } else {
+	    aiSection.classList.remove('narrow');
+	    aiSection.classList.add('wide');
+	    messagesSection.classList.remove('narrow');
+	    messagesSection.classList.add('wide');
+	  }
+	});
+
+
+
+  </script>
+
+  
+
+</body>
+</html>
+
+
+
+
+
+
+

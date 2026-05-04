@@ -27,10 +27,33 @@
 </head>
 <body>
 
-  <!-- Banner + 小标题 -->
-  <div class="admin-banner">
-    <h1 class="admin-title">后台管理</h1>
-  </div>
+  <nav class="navbar navbar-expand-md fixed-top navbar-dark" style="background-color: #e0ecde;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html" style="color: forestgreen;">饮食健康管理系统</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item"><a class="nav-link" href="index.html" style="color: darkseagreen;">首页</a></li>
+          <li class="nav-item"><a class="nav-link" href="diet.html" style="color: darkseagreen;">饮食日记</a></li>
+          <li class="nav-item"><a class="nav-link" href="goal.html" style="color: darkseagreen;">健康目标</a></li>
+          <li class="nav-item"><a class="nav-link" href="analysis.html" style="color: darkseagreen;">数据分析</a></li>
+          <li class="nav-item"><a class="nav-link" href="health.html" style="color: darkseagreen;">健康指标</a></li>
+          <li class="nav-item"><a class="nav-link active" href="admin.html" style="color: darkseagreen;">后台管理</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html" style="color: darkseagreen;">联系我们</a></li>
+        </ul>
+        <a href="login.html" class="btn btn-outline-light btn-sm me-2">登录/注册</a>
+        <a href="profile.html" class="nav-link" style="color: darkseagreen;">个人中心</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="margin-top: 80px;">
+    <!-- Banner + 小标题 -->
+    <div class="admin-banner">
+      <h1 class="admin-title">后台管理</h1>
+    </div>
 
   <div class="container mb-5">
     <div class="row mb-4">
@@ -148,7 +171,8 @@
     <div id="userDetailSection" style="display: none;">
       <div class="alert alert-info">
         <strong>当前查看用户：</strong><span id="currentViewUser"></span>
-        <button class="btn btn-sm btn-secondary float-end" onclick="backToUserList()">返回用户列表</button>
+        <button class="btn btn-sm btn-success float-end me-2" onclick="viewUserAnalysis()">查看数据分析</button>
+        <button class="btn btn-sm btn-secondary float-end me-2" onclick="backToUserList()">返回用户列表</button>
       </div>
 
       <ul class="nav nav-tabs mb-3" id="dataTabs" role="tablist">
@@ -177,6 +201,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
 
   <script src="bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>

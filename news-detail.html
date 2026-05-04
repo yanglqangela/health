@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>新闻详情</title>
+  <link rel="stylesheet" href="bootstrap-5.3.6-dist/css/bootstrap.min.css" />
+  <style>
+    body { background: #f8f9fa; position: relative; }
+       .news-header { margin-top: 80px; margin-bottom: 30px; }
+       .news-meta { color: #888; font-size: 0.9rem; }
+       .news-content { font-size: 1.1rem; line-height: 1.8; }
+       /* 返回首页按钮样式 */
+       .back-home {
+         position: absolute;
+         top: 20px;
+         right: 40px;
+         color: #000;
+         text-decoration: none;
+         font-weight: bold;
+         font-size: 1rem;
+       }
+       .back-home:hover {
+         text-decoration: underline;
+       }
+       .news-video {
+         position: relative;
+         width: 70%;  /* 横屏容器宽度 */
+         margin: 0 auto;
+         aspect-ratio: 16 / 9; /* 固定横屏比例 */
+       }
+       
+       .news-video video {
+         width: 100%;
+         height: 100%;
+         border-radius: 8px;
+         display: block;
+         object-fit: cover;
+       }
+
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-md fixed-top navbar-dark" style="background-color: #e0ecde;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html" style="color: forestgreen;">饮食健康管理系统</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item"><a class="nav-link" href="index.html" style="color: darkseagreen;">首页</a></li>
+          <li class="nav-item"><a class="nav-link" href="diet.html" style="color: darkseagreen;">饮食日记</a></li>
+          <li class="nav-item"><a class="nav-link" href="goal.html" style="color: darkseagreen;">健康目标</a></li>
+          <li class="nav-item"><a class="nav-link" href="analysis.html" style="color: darkseagreen;">数据分析</a></li>
+          <li class="nav-item"><a class="nav-link" href="health.html" style="color: darkseagreen;">健康指标</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin.html" style="color: darkseagreen;">后台管理</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html" style="color: darkseagreen;">联系我们</a></li>
+        </ul>
+        <a href="login.html" class="btn btn-outline-light btn-sm me-2">登录/注册</a>
+        <a href="profile.html" class="nav-link" style="color: darkseagreen;">个人中心</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="margin-top: 80px;">
+    <!-- 新闻标题 -->
+    <h2 id="news-title" class="news-header"></h2>
+      <p id="news-meta" class="news-meta"></p>
+      <!-- 正文内容 -->
+      <div id="news-content" class="news-content mb-4"></div>
+      <!-- 视频 -->
+      <div id="news-video" class="news-video mb-5"></div>
+    </div>
+
+  <script>
+    // 获取 URL 参数
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    // 所有新闻数据
+    const newsData = {
+      "1": {
+        title: "某市学校食堂发生食物中毒事件",
+        meta: "来源：广播新闻 | 发布时间：2025-06-20 08:47",
+        content: `
+          <p>近日，某市某学校食堂因储存海产品不当，引发集体食物中毒事件，造成多名学生身体不适，已紧急送往医院治疗。目前事件正在进一步调查中，相关负责人已被控制。</p>
+          <p>市政府高度重视此次事件，已成立专门调查组彻查原因，并责令全市各中小学全面开展食品安全排查，杜绝类似事件再次发生。</p>
+          <p>食品安全关系到每一个家庭，学校作为集中供餐的重要场所，更需严格把关，保障师生舌尖上的安全。</p>
+        `,
+        video: "videos/news1.mp4"
+      },
+      "2": {
+        title: "某品牌奶制品被检出细菌超标",
+        meta: "来源：质量监督 | 发布时间：2025-06-19 09:20",
+        content: `
+          <p>近期，某知名乳制品品牌的部分产品在抽检中被检出细菌总数超标，已责令下架。</p>
+          <p>监管部门提醒消费者注意产品批次信息，如发现购买该产品请勿食用，可凭票据退换。</p>
+        `,
+        video: "videos/news2.mp4"
+      },
+      "3": {
+        title: "进口水果检出农药残留",
+        meta: "来源：农业部 | 发布时间：2025-06-18 11:15",
+        content: `
+          <p>近期海关在对进口水果进行例行抽检时发现，部分批次检出农药残留超标。</p>
+          <p>已责令企业召回相关产品并进行销毁处理，确保市场安全。</p>
+        `,
+        video: "videos/news3.mp4"
+      },
+      "4": {
+        title: "网红零食多批次抽检不合格",
+        meta: "来源：市场监管局 | 发布时间：2025-06-17 10:00",
+        content: `
+          <p>近期，市场监管局对网红零食进行专项抽检，结果显示部分网红食品存在防腐剂、色素超标等问题。</p>
+          <p>已下架相关产品，并对生产厂家处以罚款。</p>
+        `,
+        video: "videos/news4.mp4"
+      },
+      "5": {
+        title: "校园周边小摊贩被责令整改",
+        meta: "来源：教育局 | 发布时间：2025-06-16 14:35",
+        content: `
+          <p>为保障学生饮食安全，教育局联合市场监管部门对校园周边小摊贩进行突击检查，发现多处存在卫生隐患。</p>
+          <p>相关摊贩已被责令整改，违规者已被取缔。</p>
+        `,
+        video: "videos/news5.mp4"
+      },
+      "6": {
+        title: "某火锅店食材来源造假被曝光",
+        meta: "来源：消费者维权 | 发布时间：2025-06-15 12:00",
+        content: `
+          <p>某知名火锅店被曝使用来源不明的劣质食材冒充高档食材牟利。</p>
+          <p>监管部门已对该店进行立案调查，涉事门店已停业整顿。</p>
+        `,
+        video: "videos/news6.mp4"
+      },
+      "7": {
+        title: "餐饮外卖盒饭卫生不达标",
+        meta: "来源：卫生监督 | 发布时间：2025-06-14 09:50",
+        content: `
+          <p>卫生部门近期对多家外卖盒饭企业进行抽检，发现部分餐食在制作和包装过程中存在卫生不达标问题。</p>
+          <p>相关企业已被责令整改，并加强从业人员培训。</p>
+        `,
+        video: "videos/news7.mp4"
+      },
+      "8": {
+        title: "某饮品店使用过期食材",
+        meta: "来源：食品安全网 | 发布时间：2025-06-13 16:00",
+        content: `
+          <p>某饮品连锁品牌被顾客举报使用过期水果、牛奶制作饮品，相关部门已介入调查。</p>
+          <p>目前已对涉事门店进行处罚，责令整改。</p>
+        `,
+        video: "videos/news8.mp4"
+      },
+      "9": {
+        title: "食品安全监督抽检持续加强",
+        meta: "来源：人民日报 | 发布时间：2025-06-12 10:30",
+        content: `
+          <p>食品安全事关民生，近年来我国持续加大对食品的监督抽检力度。</p>
+          <p>相关部门将继续不定期开展专项抽检，保障群众食品安全。</p>
+        `,
+        video: "videos/news9.mp4"
+      },
+      "10": {
+        title: "食品生产企业因造假被罚款",
+        meta: "来源：经济日报 | 发布时间：2025-06-11 08:40",
+        content: `
+          <p>某食品生产企业因生产销售假冒伪劣产品被查处，相关负责人被依法追责。</p>
+          <p>监管部门提醒企业诚信经营，共同维护市场秩序。</p>
+        `,
+        video: "videos/news10.mp4"
+      }
+    };
+
+    // 根据 id 渲染
+    const data = newsData[id];
+    if (data) {
+      document.title = data.title;
+      document.getElementById('news-title').innerText = data.title;
+      document.getElementById('news-meta').innerText = data.meta;
+      document.getElementById('news-content').innerHTML = data.content;
+      document.getElementById('news-video').innerHTML = `
+        <video controls width="100%">
+          <source src="${data.video}" type="video/mp4">
+          您的浏览器不支持 video 标签。
+        </video>
+      `;
+    } else {
+      document.getElementById('news-title').innerText = "新闻不存在";
+      document.getElementById('news-content').innerHTML = "<p>您访问的新闻不存在或已被删除。</p>";
+    }
+  </script>
+	<script src="main.js"></script>
+	<script>
+	  const newsData = { /* 你的新闻数据 */ };
+	  renderDetail(newsData, 'news');
+	</script>
+
+</body>
+</html>
+
