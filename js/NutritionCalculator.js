@@ -1,9 +1,16 @@
 class NutritionCalculator {
-  static calculateDailyIntake(date) {
+  static calculateDailyIntake(date, username = null) {
     const records = JSON.parse(localStorage.getItem('dietRecords')) || [];
     const dateStr = date || new Date().toISOString().slice(0, 10);
-    const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
-    const currentUserId = currentUser.username;
+    
+    // Use provided username or fall back to current user
+    let currentUserId;
+    if (username) {
+      currentUserId = username;
+    } else {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+      currentUserId = currentUser.username;
+    }
     
     const dayRecords = records.filter(r => {
       const recordDate = r.date || r.foodTime?.slice(0, 10);

@@ -50,7 +50,7 @@ function showUserList() {
 function viewUserData(username) {
   currentViewUsername = username;
   document.getElementById('currentViewUser').textContent = username;
-  document.getElementById('userList').parentElement.parentElement.style.display = 'none';
+  document.getElementById('userListSection').style.display = 'none';
   document.getElementById('userDetailSection').style.display = 'block';
   
   viewUserDietRecords(username);
@@ -364,6 +364,12 @@ function backToUserList() {
   document.getElementById('dataManagerSection').style.display = 'none';
   currentViewUsername = null;
   showUserList();
+}
+
+function viewUserAnalysis() {
+  if (currentViewUsername) {
+    window.location.href = `analysis.html?user=${encodeURIComponent(currentViewUsername)}`;
+  }
 }
 
 function showDataManager() {

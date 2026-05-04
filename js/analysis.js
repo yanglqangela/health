@@ -1,18 +1,53 @@
-const currentUser = DataStorage.load('currentUser') || {};
-if (!currentUser.username) {
-  window.location.href = 'login.html';
+// Check if viewing another user's data (from admin panel)
+const urlParams = new URLSearchParams(window.location.search);
+const viewingUsername = urlParams.get('user');
+
+let currentUser;
+if (viewingUsername) {
+  // Admin viewing another user's data
+  const adminUser = DataStorage.load('currentUser') || {};
+  if (!adminUser.isAdmin) {
+    alert('无权限查看其他用户数据');
+    window.location.href = 'index.html';
+  }
+  // Load the target user's data
+  const users = DataStorage.load('users') || [];
+  currentUser = users.find(u => u.username === viewingUsername);
+  if (!currentUser) {
+    alert('用户不存在');
+    window.location.href = 'admin.html';
+  }
+} else {
+  // Normal user viewing their own data
+  currentUser = DataStorage.load('currentUser') || {};
+  if (!currentUser.username) {
+    window.location.href = 'login.html';
+  }
 }
 
 const dateInput = document.getElementById('analysisDate');
 dateInput.value = new Date().toISOString().slice(0, 10);
 dateInput.addEventListener('change', loadAnalysis);
 
+// Show viewing info if admin is viewing another user
+if (viewingUsername) {
+  const banner = document.querySelector('.analysis-banner');
+  const viewingInfo = document.createElement('div');
+  viewingInfo.className = 'alert alert-info mt-3';
+  viewingInfo.innerHTML = `
+    <strong>正在查看用户：</strong>${viewingUsername}
+    <a href="admin.html" class="btn btn-sm btn-secondary float-end">返回后台管理</a>
+  `;
+  banner.parentNode.insertBefore(viewingInfo, banner.nextSibling);
+}
+
 let macroChartInstance = null;
 let weeklyChartInstance = null;
 
 function loadAnalysis() {
   const date = dateInput.value;
-  const actual = NutritionCalculator.calculateDailyIntake(date);
+  const username = currentUser.username;
+  const actual = NutritionCalculator.calculateDailyIntake(date, username);
   const recommended = NutritionCalculator.getRecommendedIntake(currentUser);
   const score = NutritionCalculator.calculateNutritionScore(actual, recommended);
   const status = NutritionCalculator.checkNutrientStatus(actual, recommended);
@@ -115,13 +150,14 @@ function displayWeeklyChart() {
   const today = new Date();
   const labels = [];
   const data = [];
+  const username = currentUser.username;
 
   for (let i = 6; i >= 0; i--) {
     const date = new Date(today);
     date.setDate(date.getDate() - i);
     const dateStr = date.toISOString().slice(0, 10);
     labels.push(dateStr.slice(5));
-    const intake = NutritionCalculator.calculateDailyIntake(dateStr);
+    const intake = NutritionCalculator.calculateDailyIntake(dateStr, username);
     data.push(intake.calories);
   }
 
