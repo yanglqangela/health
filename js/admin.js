@@ -458,6 +458,11 @@ function exportSelectedUsersData() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM Content Loaded - Starting admin.js');
+  console.log('userList element:', document.getElementById('userList'));
+  console.log('userDetailSection element:', document.getElementById('userDetailSection'));
+  console.log('localStorage users:', localStorage.getItem('users'));
+  
   showUserList();
   
   const dietTab = document.getElementById('diet-tab');
