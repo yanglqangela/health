@@ -424,6 +424,8 @@ function exportSelectedUsersData() {
   const checkboxes = document.querySelectorAll('.user-checkbox:checked');
   const selectedUsernames = Array.from(checkboxes).map(cb => cb.value);
   
+  console.log('Selected usernames:', selectedUsernames);
+  
   if (selectedUsernames.length === 0) {
     alert('请至少选择一个用户');
     return;
@@ -434,16 +436,25 @@ function exportSelectedUsersData() {
   const allHealthRecords = JSON.parse(localStorage.getItem('healthRecords')) || [];
   const allHealthGoals = JSON.parse(localStorage.getItem('healthGoals')) || [];
   
+  console.log('All users:', allUsers.length);
+  console.log('All diet records:', allDietRecords.length);
+  
   const selectedUsers = allUsers.filter(u => selectedUsernames.includes(u.username));
   const selectedDietRecords = allDietRecords.filter(r => selectedUsernames.includes(r.userId));
   const selectedHealthRecords = allHealthRecords.filter(r => selectedUsernames.includes(r.userId));
   const selectedHealthGoals = allHealthGoals.filter(g => selectedUsernames.includes(g.userId));
   
+  console.log('Selected users:', selectedUsers.length);
+  console.log('Selected diet records:', selectedDietRecords.length);
+  console.log('Selected health records:', selectedHealthRecords.length);
+  console.log('Selected health goals:', selectedHealthGoals.length);
+  
+  // 直接使用数组对象，不进行字符串化
   const data = {
-    users: JSON.stringify(selectedUsers),
-    dietRecords: JSON.stringify(selectedDietRecords),
-    healthRecords: JSON.stringify(selectedHealthRecords),
-    healthGoals: JSON.stringify(selectedHealthGoals)
+    users: selectedUsers,
+    dietRecords: selectedDietRecords,
+    healthRecords: selectedHealthRecords,
+    healthGoals: selectedHealthGoals
   };
   
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -454,7 +465,7 @@ function exportSelectedUsersData() {
   a.click();
   URL.revokeObjectURL(url);
   
-  alert(`已导出 ${selectedUsernames.length} 个用户的数据\n请将 initial-data.json 文件放到项目的 data 文件夹中`);
+  alert(`已导出 ${selectedUsernames.length} 个用户的数据\n包含：\n- 用户信息: ${selectedUsers.length} 个\n- 饮食记录: ${selectedDietRecords.length} 条\n- 健康记录: ${selectedHealthRecords.length} 条\n- 健康目标: ${selectedHealthGoals.length} 个\n\n请将 initial-data.json 文件放到项目的 data 文件夹中`);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
