@@ -10,12 +10,14 @@ class DataInitializer {
       
       for (let key in data) {
         if (!localStorage.getItem(key)) {
-          localStorage.setItem(key, data[key]);
+          // Convert array to JSON string for localStorage
+          localStorage.setItem(key, JSON.stringify(data[key]));
         }
       }
       
       return true;
     } catch (e) {
+      console.error('Error loading initial data:', e);
       return false;
     }
   }
