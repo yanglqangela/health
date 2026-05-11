@@ -467,7 +467,7 @@ function exportSelectedUsersData() {
   a.click();
   URL.revokeObjectURL(url);
   
-  alert(`已导出 ${selectedUsernames.length} 个用户的数据\n包含：\n- 用户信息: ${selectedUsers.length} 个\n- 饮食记录: ${selectedDietRecords.length} 条\n- 健康记录: ${selectedHealthRecords.length} 条\n- 健康目标: ${selectedHealthGoals.length} 个\n\n请将 initial-data.json 文件放到项目的 data 文件夹中`);
+  alert(`已导出 ${selectedUsernames.length} 个用户的数据\n包含：\n- 用户信息: ${selectedUsers.length} 个\n- 饮食记录: ${selectedDietRecords.length} 条\n- 健康记录: ${selectedHealthRecords.length} 条\n- 健康目标: ${selectedHealthGoals.length} 个\n\n请将 initial-data.json 文件放到项目的 data 文件夹中\n然后可以在其他电脑上使用相同的数据！`);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -509,6 +509,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function reloadSystemData() {
   DataInitializer.clearAndReload();
+}
+
+function forceReloadDataFile() {
+  DataInitializer.forceReloadData();
 }
 
 function clearSystemData() {
