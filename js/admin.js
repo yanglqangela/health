@@ -449,7 +449,7 @@ function exportSelectedUsersData() {
   console.log('Selected health records:', selectedHealthRecords.length);
   console.log('Selected health goals:', selectedHealthGoals.length);
   
-  // 直接使用数组对象，不进行字符串化
+  // 使用数组对象，确保正确的UTF-8编码
   const data = {
     users: selectedUsers,
     dietRecords: selectedDietRecords,
@@ -457,7 +457,9 @@ function exportSelectedUsersData() {
     healthGoals: selectedHealthGoals
   };
   
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const blob = new Blob([JSON.stringify(data, null, 2)], { 
+    type: 'application/json;charset=utf-8' 
+  });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;

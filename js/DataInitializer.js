@@ -24,16 +24,26 @@ class DataInitializer {
 
   static exportCurrentData() {
     const data = {};
-    const keys = ['users', 'dietRecords', 'healthRecords', 'healthGoals', 'currentUser'];
+    const keys = ['users', 'dietRecords', 'healthRecords', 'healthGoals'];
     
     keys.forEach(key => {
       const value = localStorage.getItem(key);
       if (value) {
-        data[key] = value;
+        try {
+          // 解析JSON字符串为对象，而不是直接使用字符串
+          data[key] = JSON.parse(value);
+        } catch (e) {
+          console.error(`Error parsing ${key}:`, e);
+          data[key] = [];
+        }
+      } else {
+        data[key] = [];
       }
     });
     
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(data, null, 2)], { 
+      type: 'application/json;charset=utf-8' 
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
